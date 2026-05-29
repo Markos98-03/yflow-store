@@ -38,13 +38,14 @@ export default function Home() {
   const products: Product[] = [
 
     {
-      name: "Conjunto de bolso y zandalias",
-      description: "bolso de mano elegante a juego con zandalias ideal para fiestas y eventos",
-      price: 60,
-      image: "/bolsoconjunto.jpg",
-      category: "Mujer",
-      colors: ["Negro", " Dorado" "Marron" "Beige" "Rosado" "Rojo", "Blanco"],
-      sizes: ["37", "38", "39"]
+      {
+  name: "Bolso Conjunto",
+  price: 50,
+  image: "/bolsoconjunto.jpg",
+  category: "Mujer",
+  colors: ["Negro", "Dorado", "Marron", "Beige", "Rosado", "Rojo", "Blanco"],
+  sizes: ["37", "38", "39"]
+}
     },
 
     {
