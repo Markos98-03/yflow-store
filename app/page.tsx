@@ -8,9 +8,6 @@ type Product = {
   price: number
   image: string
   category: string
-  featured?: boolean
-  isNew?: boolean
-  isOffer?: boolean
 }
 
 export default function Home() {
@@ -18,7 +15,6 @@ export default function Home() {
   const [lang, setLang] = useState("es")
   const [search, setSearch] = useState("")
   const [category, setCategory] = useState("Todos")
-  const [showAll, setShowAll] = useState(false)
 
   const phone = "19715714880"
 
@@ -26,92 +22,68 @@ export default function Home() {
     es: {
       subtitle: "Moda moderna para mujer y hombre",
       search: "Buscar producto...",
-      all: "Todos",
-      featured: "🔥 Más vendidos",
-      new: "Nuevo",
-      offer: "Oferta",
-      showAll: "Ver todo",
       whatsapp: "Preguntar por WhatsApp"
     },
     en: {
       subtitle: "Modern fashion for men and women",
       search: "Search product...",
-      all: "All",
-      featured: "🔥 Best sellers",
-      new: "New",
-      offer: "Sale",
-      showAll: "View all",
       whatsapp: "Ask on WhatsApp"
     }
   }
 
+  // ================= PRODUCTOS COMPLETOS =================
   const products: Product[] = [
-    {
-      name: "Bolso Negro",
-      description: "Bolso elegante color negro.",
-      price: 50,
-      image: "/bolso-negro.jpg",
-      category: "Mujer",
-      featured: true,
-      isNew: true
-    },
-    {
-      name: "Bolso Dorado",
-      description: "Bolso dorado elegante.",
-      price: 50,
-      image: "/bolso-dorado.jpg",
-      category: "Mujer",
-      featured: true,
-      isOffer: true
-    },
-    {
-      name: "Bolso Marrón",
-      description: "Bolso clásico marrón.",
-      price: 50,
-      image: "/bolso-marron.jpg",
-      category: "Mujer"
-    },
-    {
-      name: "Sandalias Verdes",
-      description: "Sandalias cómodas.",
-      price: 45,
-      image: "/sandalias-verdes.jpg",
-      category: "Calzado",
-      isNew: true
-    },
-    {
-      name: "Sneakers ",
-      description: "Tenis urbanos.",
-      price: 80,
-      image: "/tenis-blanco-azul.jpg",
-      category: "Calzado",
-      featured: true
-    },
-    {
-      name: "Jeans Negro",
-      description: "Jeans slim fit.",
-      price: 60,
-      image: "/jeans-negro.jpg",
-      category: "Hombre"
-    }
+
+    // ================= BOLSOS =================
+    { name: "Bolso Negro", description: "Bolso elegante negro.", price: 50, image: "/bolso-negro.jpg", category: "Mujer" },
+    { name: "Bolso Dorado", description: "Bolso dorado moderno.", price: 50, image: "/bolso-dorado.jpg", category: "Mujer" },
+    { name: "Bolso Marrón", description: "Bolso marrón clásico.", price: 50, image: "/bolso-marron.jpg", category: "Mujer" },
+    { name: "Bolso Beige", description: "Bolso beige elegante.", price: 50, image: "/bolso-beige.jpg", category: "Mujer" },
+    { name: "Bolso Rosado", description: "Bolso rosado juvenil.", price: 50, image: "/bolso-rosado.jpg", category: "Mujer" },
+    { name: "Bolso Blanco", description: "Bolso blanco elegante.", price: 50, image: "/bolso-blanco.jpg", category: "Mujer" },
+
+    { name: "Bolso Conjunto", description: "Conjunto de bolso elegante.", price: 60, image: "/bolsoconjunto.jpg", category: "Mujer" },
+    { name: "Bolso Conjunto 1", description: "Conjunto de bolso moderno.", price: 60, image: "/bolsoconjunto1.jpg", category: "Mujer" },
+
+    // ================= CARTERAS =================
+    { name: "Cartera Negra", description: "Cartera elegante negra.", price: 70, image: "/cartera-negra.jpg", category: "Accesorios" },
+    { name: "Cartera Beige", description: "Cartera beige elegante.", price: 70, image: "/cartera-beige.jpg", category: "Accesorios" },
+    { name: "Cartera Blanca", description: "Cartera blanca moderna.", price: 70, image: "/cartera-blanca.jpg", category: "Accesorios" },
+    { name: "Cartera Brown", description: "Cartera marrón clásica.", price: 70, image: "/cartera-brown.jpg", category: "Accesorios" },
+    { name: "Cartera Gris", description: "Cartera gris elegante.", price: 70, image: "/cartera-gris.jpg", category: "Accesorios" },
+    { name: "Cartera LV", description: "Cartera estilo lujo.", price: 90, image: "/cartera-lv.jpg", category: "Accesorios" },
+    { name: "Cartera LV1", description: "Cartera lujo moderna.", price: 90, image: "/cartera-lv1.jpg", category: "Accesorios" },
+    { name: "Cartera Roja", description: "Cartera roja elegante.", price: 70, image: "/cartera-roja.jpg", category: "Accesorios" },
+    { name: "Cartera Roja 1", description: "Cartera roja moderna.", price: 70, image: "/cartera-roja1.jpg", category: "Accesorios" },
+    { name: "Cartera Rosada", description: "Cartera rosada juvenil.", price: 70, image: "/cartera-rosada.jpg", category: "Accesorios" },
+
+    // ================= HOMBRE =================
+    { name: "Jeans Hombre", description: "Jeans clásico moderno.", price: 60, image: "/jeanshombre.jpg", category: "Hombre" },
+    { name: "Jeans Hombre 1", description: "Jeans slim fit.", price: 60, image: "/jeanshombre1.jpg", category: "Hombre" },
+    { name: "Jeans Hombre 2", description: "Jeans azul moderno.", price: 60, image: "/jeanshombre2.jpg", category: "Hombre" },
+    { name: "Jeans Hombre 3", description: "Jeans urbano.", price: 60, image: "/jeanshombre3.jpg", category: "Hombre" },
+
+    // ================= CALZADO =================
+    { name: "Sandalias RAV", description: "Sandalias cómodas modernas.", price: 45, image: "/sandalias-rav.jpg", category: "Calzado" },
+    { name: "Tenis", description: "Tenis urbanos modernos.", price: 80, image: "/tenis.jpg", category: "Calzado" },
+    { name: "Tenis Blanco V", description: "Tenis blanco elegante.", price: 80, image: "/tenis-blancov.jpg", category: "Calzado" }
   ]
 
   const sendWhatsApp = (product: Product) => {
-
     const message =
 `🛍️ Hola! quiero este producto:
 
 👕 Producto: ${product.name}
 📂 Categoría: ${product.category}
-💰 Precio: $${product.price}
-
-¿Está disponible?`
+💰 Precio: $${product.price}`
 
     window.open(
       `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
       "_blank"
     )
   }
+
+  const categories = ["Todos", "Mujer", "Hombre", "Calzado", "Accesorios"]
 
   const filteredProducts = useMemo(() => {
     let list = products
@@ -126,18 +98,8 @@ export default function Home() {
       )
     }
 
-    if (!showAll) {
-      list = list.slice(0, 6)
-    }
-
     return list
-  }, [search, category, showAll])
-
-  const featured = products
-    .filter(p => p.featured)
-    .sort((a, b) => b.price - a.price)
-
-  const categories = ["Todos", "Mujer", "Hombre", "Calzado"]
+  }, [search, category])
 
   return (
     <main className="bg-gray-100 min-h-screen">
@@ -182,31 +144,6 @@ export default function Home() {
         </select>
       </div>
 
-      {/* MÁS VENDIDOS */}
-      <div className="px-6">
-        <h3 className="text-xl font-bold mb-3">🔥 {texts[lang].featured}</h3>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {featured.map((p, i) => (
-            <div key={i} className="bg-white p-4 rounded-xl shadow">
-              <img src={p.image} className="h-40 w-full object-cover rounded" />
-              <p className="font-bold mt-2">{p.name}</p>
-              <p className="text-gray-600">${p.price}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* BOTÓN VER TODO */}
-      <div className="text-center mt-6">
-        <button
-          onClick={() => setShowAll(!showAll)}
-          className="bg-black text-white px-6 py-3 rounded-xl"
-        >
-          {showAll ? "Ocultar" : texts[lang].showAll}
-        </button>
-      </div>
-
       {/* PRODUCTOS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
 
@@ -217,23 +154,9 @@ export default function Home() {
 
             <div className="p-4">
 
-              <div className="flex gap-2">
-                <span className="text-xs bg-gray-100 px-2 py-1 rounded">
-                  {p.category}
-                </span>
-
-                {p.isNew && (
-                  <span className="text-xs bg-blue-500 text-white px-2 py-1 rounded">
-                    {texts[lang].new}
-                  </span>
-                )}
-
-                {p.isOffer && (
-                  <span className="text-xs bg-red-500 text-white px-2 py-1 rounded">
-                    {texts[lang].offer}
-                  </span>
-                )}
-              </div>
+              <span className="text-xs bg-gray-100 px-2 py-1 rounded">
+                {p.category}
+              </span>
 
               <h3 className="font-bold text-lg mt-2">{p.name}</h3>
 
