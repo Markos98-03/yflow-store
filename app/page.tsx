@@ -11,7 +11,7 @@ export default function Home() {
 
   const [lang, setLang] = useState<"es" | "en">("es")
 
-  const phone = "19715714880" // 👈 tu WhatsApp
+  const phone = "19715714880"
 
   const texts = {
     es: {
@@ -82,7 +82,7 @@ export default function Home() {
         </p>
       </section>
 
-      {/* CATEGORÍAS */}
+      {/* CATEGORIES */}
       <section className="px-10 py-10">
         <h2 className="text-2xl font-bold text-center mb-6">
           {texts[lang].categories}
@@ -97,7 +97,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PRODUCTOS */}
+      {/* PRODUCTS */}
       <section className="px-10 py-10 bg-gray-50">
         <h2 className="text-2xl font-bold text-center mb-8">
           {texts[lang].products}
