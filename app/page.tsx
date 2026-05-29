@@ -28,6 +28,8 @@ export default function Home() {
   }
 
   const products: Product[] = [
+
+    // ================= MUJER =================
     {
       name: "Bolso Negro",
       description: "Bolso elegante color negro, perfecto para cualquier ocasión.",
@@ -50,10 +52,40 @@ export default function Home() {
       category: "Mujer"
     },
     {
+      name: "Bolso Beige",
+      description: "Bolso beige combinable con todo outfit.",
+      price: 50,
+      image: "/bolso-beige.jpg",
+      category: "Mujer"
+    },
+    {
+      name: "Bolso Rosado",
+      description: "Bolso rosado moderno juvenil.",
+      price: 50,
+      image: "/bolso-rosado.jpg",
+      category: "Mujer"
+    },
+    {
+      name: "Bolso Blanco",
+      description: "Bolso blanco elegante.",
+      price: 50,
+      image: "/bolso-blanco.jpg",
+      category: "Mujer"
+    },
+
+    // ================= CALZADO =================
+    {
       name: "Sandalias Bi-color",
       description: "Sandalias cómodas para uso diario.",
       price: 45,
       image: "/sandalias-bi-color.jpg",
+      category: "Calzado"
+    },
+    {
+      name: "Sandalias Verdes",
+      description: "Sandalias verdes frescas y cómodas.",
+      price: 45,
+      image: "/sandalias-verdes.jpg",
       category: "Calzado"
     },
     {
@@ -63,11 +95,36 @@ export default function Home() {
       image: "/tenis-blanco-azul.jpg",
       category: "Calzado"
     },
+
+    // ================= ACCESORIOS =================
+    {
+      name: "Cartera Negra",
+      description: "Cartera elegante negra.",
+      price: 70,
+      image: "/cartera-negra.jpg",
+      category: "Accesorios"
+    },
+    {
+      name: "Cartera Beige",
+      description: "Cartera beige elegante.",
+      price: 70,
+      image: "/cartera-beige.jpg",
+      category: "Accesorios"
+    },
+
+    // ================= HOMBRE =================
     {
       name: "Jeans Hombre Negro",
       description: "Jeans negro slim moderno.",
       price: 60,
       image: "/jeans-negro.jpg",
+      category: "Hombre"
+    },
+    {
+      name: "Jeans Hombre Azul",
+      description: "Jeans azul clásico.",
+      price: 60,
+      image: "/jeans-azul.jpg",
       category: "Hombre"
     }
   ]
@@ -75,7 +132,7 @@ export default function Home() {
   const sendWhatsApp = (product: Product) => {
 
     const message =
-`🛍️ *Hola! quiero este producto:*
+`🛍️ Hola! quiero este producto:
 
 👕 Producto: ${product.name}
 📂 Categoría: ${product.category}
