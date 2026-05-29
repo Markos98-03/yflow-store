@@ -2,11 +2,16 @@
 
 import { useState } from "react"
 
+type Product = {
+  name: string
+  price: number
+}
+
 export default function Home() {
 
-  const [lang, setLang] = useState("es")
+  const [lang, setLang] = useState<"es" | "en">("es")
 
-  const phone = "19715714880" // 👈 CAMBIA ESTO
+  const phone = "19715714880" // 👈 tu WhatsApp
 
   const texts = {
     es: {
@@ -25,16 +30,20 @@ export default function Home() {
     }
   }
 
-  const products = [
+  const products: Product[] = [
     { name: "Bolso Luxury", price: 45 },
     { name: "Vestido Elegante", price: 60 },
     { name: "Sneakers Urban", price: 80 },
     { name: "Sandalias Summer", price: 35 }
   ]
 
-  const sendWhatsApp = (product) => {
+  const sendWhatsApp = (product: Product) => {
     const message = `Hola, quiero información de: ${product.name} - $${product.price}`
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank")
+
+    window.open(
+      `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
+      "_blank"
+    )
   }
 
   return (
@@ -73,7 +82,7 @@ export default function Home() {
         </p>
       </section>
 
-      {/* CATEGORIAS */}
+      {/* CATEGORÍAS */}
       <section className="px-10 py-10">
         <h2 className="text-2xl font-bold text-center mb-6">
           {texts[lang].categories}
@@ -103,6 +112,7 @@ export default function Home() {
 
               <h3 className="font-bold">{p.name}</h3>
               <p className="text-gray-600">${p.price}</p>
+
               <p className="text-green-600 text-sm mb-3">
                 Disponible en tienda
               </p>
