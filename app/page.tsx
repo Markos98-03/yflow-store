@@ -4,7 +4,12 @@ import { useState } from "react"
 
 type Product = {
   name: string
+  description: string
   price: number
+  image: string
+  category: string
+  colors: string[]
+  sizes: string[]
 }
 
 export default function Home() {
@@ -15,30 +20,92 @@ export default function Home() {
 
   const texts = {
     es: {
-      subtitle: "Moda moderna para mujer y hombre — visita nuestra tienda física",
-      categories: "Categorías",
-      products: "Productos disponibles",
-      visit: "Visítanos en YFlow",
+      subtitle: "Moda moderna para mujer y hombre",
+      products: "Productos",
       whatsapp: "Preguntar por WhatsApp"
     },
     en: {
-      subtitle: "Modern fashion for men and women — visit our physical store",
-      categories: "Categories",
-      products: "Available products",
-      visit: "Visit us at YFlow",
+      subtitle: "Modern fashion for men and women",
+      products: "Products",
       whatsapp: "Ask on WhatsApp"
     }
   }
 
+  // ======================================
+  // AQUI AGREGAS TUS PRODUCTOS
+  // ======================================
+
   const products: Product[] = [
-    { name: "Bolso Luxury", price: 45 },
-    { name: "Vestido Elegante", price: 60 },
-    { name: "Sneakers Urban", price: 80 },
-    { name: "Sandalias Summer", price: 35 }
+
+    {
+      name: "Conjunto de bolso y zandalias",
+      description: "bolso de mano elegante a juego con zandalias ideal para fiestas y eventos",
+      price: 60,
+      image: "/bolsoconjunto.jpg",
+      category: "Mujer",
+      colors: ["Negro", " Dorado" "Marron" "Beige" "Rosado" "Rojo", "Blanco"],
+      sizes: ["37", "38", "39"]
+    },
+
+    {
+      name: "Zandalias",
+      description: "Sandalias modernas y cómodas, ideales para el verano y uso diario. Diseño ligero que combina con cualquier outfit.",
+      price: 45,
+      image: "/zandalias.jpg",
+      category: "Calzado",
+      colors: ["Negro", "Beige", "Verde", "Azul"],
+      sizes: ["37", "38", "39"]
+    },
+
+    {
+      name: "Sneakers Urban",
+      description: "Tenis modernos cómodos y urbanos",
+      price: 80,
+      image: "/tenis.jpg",
+      category: "Calzado",
+      colors: ["Blanco y Azul", "Blanco y Amarillo" "Blanco y Verde"],
+      sizes: ["39", "40", "41", "42"]
+    },
+
+   {
+  name: "Juegos de Carteras"
+  description: "Juego de carteras con diseño elegante y versátil. Perfectas para complementar cualquier outfit, con varios tamaños para diferentes usos diarios.",
+  price: 0,
+  image: "/carteras.jpg",
+  category: "Accesorios",
+  colors: ["Beige", "Gris", "Blanco","Rosado", "Negro"],
+  sizes: [""]
+},
+
+  {
+    name: "Pantalon y camiseta de Hombre",
+    description: "Jeans de mezclilla con corte moderno, cómodos y duraderos. Perfectos para un look casual o urbano en cualquier ocasión.",
+    price: 60,
+    image: "/jeanshombre.jpg",
+    category: "Hombre",
+    colors: ["Negro", "Rojo", "Blanco"],
+    sizes: ["M", "L", "XL"]
+  },
+
+
   ]
 
+  // ======================================
+  // WHATSAPP
+  // ======================================
+
   const sendWhatsApp = (product: Product) => {
-    const message = `Hola, quiero información de: ${product.name} - $${product.price}`
+
+    const message =
+`Hola, quiero información de:
+
+Producto: ${product.name}
+
+Precio: $${product.price}
+
+Colores: ${product.colors.join(", ")}
+
+Tamaños: ${product.sizes.join(", ")}`
 
     window.open(
       `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
@@ -47,115 +114,123 @@ export default function Home() {
   }
 
   return (
-    <main className="bg-white text-black">
+
+    <main className="bg-gray-100 min-h-screen text-black">
 
       {/* NAVBAR */}
-      <header className="flex justify-between items-center px-8 py-5 border-b">
+      <header className="bg-white border-b px-8 py-5 flex justify-between items-center">
 
-        <h1 className="text-2xl font-bold">YFlow</h1>
+        <h1 className="text-3xl font-bold">
+          YFlow
+        </h1>
 
-        <div className="flex gap-3 items-center">
+        <div className="flex gap-3">
 
           <button
             onClick={() => setLang(lang === "es" ? "en" : "es")}
-            className="border px-3 py-1 rounded text-sm"
+            className="border px-3 py-1 rounded"
           >
             {lang === "es" ? "EN" : "ES"}
           </button>
 
           <a
             href={`https://wa.me/${phone}`}
-            className="bg-black text-white px-4 py-2 rounded-full text-sm"
+            className="bg-black text-white px-5 py-2 rounded-full"
           >
             WhatsApp
           </a>
 
         </div>
+
       </header>
 
       {/* HERO */}
-      <section className="text-center py-20 bg-gray-50">
-        <h2 className="text-5xl font-bold">YFlow Fashion</h2>
+      <section className="text-center py-20 bg-white">
 
-        <p className="text-gray-600 mt-3 text-lg">
-          {texts[lang].subtitle}
-        </p>
-      </section>
-
-      {/* CATEGORIES */}
-      <section className="px-10 py-10">
-        <h2 className="text-2xl font-bold text-center mb-6">
-          {texts[lang].categories}
+        <h2 className="text-5xl font-bold mb-4">
+          YFlow Fashion
         </h2>
 
-        <div className="grid md:grid-cols-4 gap-6 text-center">
-          {["👗 Mujer", "👕 Hombre", "👜 Accesorios", "👟 Calzado"].map((c) => (
-            <div key={c} className="border p-5 rounded-xl">
-              {c}
-            </div>
-          ))}
-        </div>
+        <p className="text-gray-600 text-lg">
+          {texts[lang].subtitle}
+        </p>
+
       </section>
 
-      {/* PRODUCTS */}
-      <section className="px-10 py-10 bg-gray-50">
-        <h2 className="text-2xl font-bold text-center mb-8">
+      {/* PRODUCTOS */}
+      <section className="px-8 py-14">
+
+        <h2 className="text-4xl font-bold text-center mb-12">
           {texts[lang].products}
         </h2>
 
-        <div className="grid md:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-3 gap-8">
 
-          {products.map((p, i) => (
-            <div key={i} className="bg-white shadow rounded-xl p-4">
+          {products.map((product, index) => (
 
-              <div className="h-40 bg-gray-200 rounded mb-3"></div>
+            <div
+              key={index}
+              className="bg-white rounded-2xl shadow-lg overflow-hidden"
+            >
 
-              <h3 className="font-bold">{p.name}</h3>
-              <p className="text-gray-600">${p.price}</p>
+              {/* IMAGEN */}
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full h-80 object-cover"
+              />
 
-              <p className="text-green-600 text-sm mb-3">
-                Disponible en tienda
-              </p>
+              {/* INFO */}
+              <div className="p-5">
 
-              <button
-                onClick={() => sendWhatsApp(p)}
-                className="w-full bg-green-600 text-white py-2 rounded"
-              >
-                {texts[lang].whatsapp}
-              </button>
+                <p className="text-sm text-gray-500 mb-1">
+                  {product.category}
+                </p>
+
+                <h3 className="text-2xl font-bold">
+                  {product.name}
+                </h3>
+
+                <p className="text-gray-600 mt-2">
+                  {product.description}
+                </p>
+
+                <p className="mt-3 text-sm">
+                  <span className="font-bold">
+                    Colores:
+                  </span>{" "}
+                  {product.colors.join(", ")}
+                </p>
+
+                <p className="text-sm mt-1">
+                  <span className="font-bold">
+                    Tamaños:
+                  </span>{" "}
+                  {product.sizes.join(", ")}
+                </p>
+
+                <p className="text-3xl font-bold mt-5">
+                  ${product.price}
+                </p>
+
+                <button
+                  onClick={() => sendWhatsApp(product)}
+                  className="w-full mt-5 bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl"
+                >
+                  {texts[lang].whatsapp}
+                </button>
+
+              </div>
 
             </div>
+
           ))}
 
         </div>
+
       </section>
-
-      {/* CTA */}
-      <section className="text-center py-20">
-        <h2 className="text-3xl font-bold">
-          {texts[lang].visit}
-        </h2>
-
-        <p className="text-gray-600 mt-2">
-          Moda real, sin envíos — compra en tienda física
-        </p>
-
-        <a
-          href={`https://wa.me/${phone}`}
-          className="inline-block mt-6 bg-black text-white px-6 py-3 rounded-full"
-        >
-          WhatsApp
-        </a>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="bg-black text-white text-center py-8">
-        <p className="font-bold">YFlow</p>
-        <p className="text-sm text-gray-400">
-          Moda presencial — tienda física
-        </p>
-      </footer>
 
     </main>
+
   )
 }
