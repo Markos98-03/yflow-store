@@ -19,19 +19,15 @@ export default function Home() {
   const texts = {
     es: {
       subtitle: "Moda moderna para mujer y hombre",
-      products: "Productos",
       whatsapp: "Preguntar por WhatsApp"
     },
     en: {
       subtitle: "Modern fashion for men and women",
-      products: "Products",
       whatsapp: "Ask on WhatsApp"
     }
   }
 
   const products: Product[] = [
-
-    // ================= MUJER =================
     {
       name: "Bolso Negro",
       description: "Bolso elegante color negro, perfecto para cualquier ocasión.",
@@ -54,40 +50,10 @@ export default function Home() {
       category: "Mujer"
     },
     {
-      name: "Bolso Beige",
-      description: "Bolso beige combinable con todo outfit.",
-      price: 50,
-      image: "/bolso-beige.jpg",
-      category: "Mujer"
-    },
-    {
-      name: "Bolso Rosado",
-      description: "Bolso rosado moderno juvenil.",
-      price: 50,
-      image: "/bolso-rosado.jpg",
-      category: "Mujer"
-    },
-    {
-      name: "Bolso Blanco",
-      description: "Bolso blanco elegante.",
-      price: 50,
-      image: "/bolso-blanco.jpg",
-      category: "Mujer"
-    },
-
-    // ================= CALZADO =================
-    {
       name: "Sandalias Bi-color",
       description: "Sandalias cómodas para uso diario.",
       price: 45,
       image: "/sandalias-bi-color.jpg",
-      category: "Calzado"
-    },
-    {
-      name: "Sandalias Verdes",
-      description: "Sandalias verdes frescas y cómodas.",
-      price: 45,
-      image: "/sandalias-verdes.jpg",
       category: "Calzado"
     },
     {
@@ -97,47 +63,25 @@ export default function Home() {
       image: "/tenis-blanco-azul.jpg",
       category: "Calzado"
     },
-
-    // ================= ACCESORIOS =================
-    {
-      name: "Cartera Negra",
-      description: "Cartera elegante negra.",
-      price: 70,
-      image: "/cartera-negra.jpg",
-      category: "Accesorios"
-    },
-    {
-      name: "Cartera Beige",
-      description: "Cartera beige elegante.",
-      price: 70,
-      image: "/cartera-beige.jpg",
-      category: "Accesorios"
-    },
-
-    // ================= HOMBRE =================
     {
       name: "Jeans Hombre Negro",
       description: "Jeans negro slim moderno.",
       price: 60,
       image: "/jeans-negro.jpg",
       category: "Hombre"
-    },
-    {
-      name: "Jeans Hombre Azul",
-      description: "Jeans azul clásico.",
-      price: 60,
-      image: "/jeans-azul.jpg",
-      category: "Hombre"
     }
   ]
 
   const sendWhatsApp = (product: Product) => {
-    const message =
-`Hola, quiero información:
 
-Producto: ${product.name}
-Categoría: ${product.category}
-Precio: $${product.price}`
+    const message =
+`🛍️ *Hola! quiero este producto:*
+
+👕 Producto: ${product.name}
+📂 Categoría: ${product.category}
+💰 Precio: $${product.price}
+
+¿Está disponible?`
 
     window.open(
       `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
@@ -149,15 +93,21 @@ Precio: $${product.price}`
     <main className="bg-gray-100 min-h-screen">
 
       {/* HEADER */}
-      <header className="bg-white flex justify-between p-5 border-b">
-        <h1 className="text-2xl font-bold">YFlow</h1>
+      <header className="bg-white flex justify-between items-center p-5 border-b sticky top-0 z-10">
+        <h1 className="text-2xl font-bold tracking-tight">YFlow</h1>
 
-        <div className="flex gap-3">
-          <button onClick={() => setLang(lang === "es" ? "en" : "es")}>
+        <div className="flex gap-3 items-center">
+          <button
+            onClick={() => setLang(lang === "es" ? "en" : "es")}
+            className="px-3 py-1 border rounded"
+          >
             {lang === "es" ? "EN" : "ES"}
           </button>
 
-          <a href={`https://wa.me/${phone}`}>
+          <a
+            href={`https://wa.me/${phone}`}
+            className="bg-green-600 text-white px-3 py-1 rounded"
+          >
             WhatsApp
           </a>
         </div>
@@ -165,37 +115,54 @@ Precio: $${product.price}`
 
       {/* TITULO */}
       <div className="text-center py-10">
-        <h2 className="text-4xl font-bold">YFlow Fashion</h2>
-        <p>{texts[lang].subtitle}</p>
+        <h2 className="text-4xl font-bold tracking-tight">
+          YFlow Fashion
+        </h2>
+        <p className="text-gray-600 mt-2">
+          {texts[lang].subtitle}
+        </p>
       </div>
 
       {/* PRODUCTOS */}
-      <div className="grid md:grid-cols-3 gap-6 p-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
 
         {products.map((p, i) => (
-          <div key={i} className="bg-white rounded-lg shadow">
+          <div
+            key={i}
+            className="bg-white rounded-2xl shadow-md hover:shadow-xl transition overflow-hidden"
+          >
 
-            <img src={p.image} className="h-64 w-full object-cover" />
+            <img
+              src={p.image}
+              className="h-64 w-full object-cover hover:scale-105 transition duration-300"
+            />
 
             <div className="p-4">
 
-              <p className="text-sm text-gray-500">{p.category}</p>
+              <span className="text-xs bg-gray-100 px-2 py-1 rounded-full">
+                {p.category}
+              </span>
 
-              <h3 className="font-bold text-lg">{p.name}</h3>
+              <h3 className="font-bold text-lg mt-2">
+                {p.name}
+              </h3>
 
-              <p className="text-gray-600 text-sm">{p.description}</p>
+              <p className="text-gray-600 text-sm mt-1">
+                {p.description}
+              </p>
 
-              <p className="font-bold text-xl mt-2">${p.price}</p>
+              <p className="font-bold text-xl mt-3">
+                ${p.price}
+              </p>
 
               <button
                 onClick={() => sendWhatsApp(p)}
-                className="bg-green-600 text-white w-full mt-3 py-2 rounded"
+                className="bg-black text-white w-full mt-4 py-3 rounded-xl hover:bg-gray-800 transition"
               >
                 {texts[lang].whatsapp}
               </button>
 
             </div>
-
           </div>
         ))}
 
