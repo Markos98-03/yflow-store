@@ -9,6 +9,8 @@ type Product = {
   image: string
   category: string
   featured?: boolean
+  isNew?: boolean
+  isOffer?: boolean
 }
 
 export default function Home() {
@@ -16,7 +18,7 @@ export default function Home() {
   const [lang, setLang] = useState("es")
   const [search, setSearch] = useState("")
   const [category, setCategory] = useState("Todos")
-  const [sort, setSort] = useState("none")
+  const [showAll, setShowAll] = useState(false)
 
   const phone = "19715714880"
 
@@ -26,6 +28,9 @@ export default function Home() {
       search: "Buscar producto...",
       all: "Todos",
       featured: "🔥 Más vendidos",
+      new: "Nuevo",
+      offer: "Oferta",
+      showAll: "Ver todo",
       whatsapp: "Preguntar por WhatsApp"
     },
     en: {
@@ -33,6 +38,9 @@ export default function Home() {
       search: "Search product...",
       all: "All",
       featured: "🔥 Best sellers",
+      new: "New",
+      offer: "Sale",
+      showAll: "View all",
       whatsapp: "Ask on WhatsApp"
     }
   }
@@ -44,7 +52,8 @@ export default function Home() {
       price: 50,
       image: "/bolso-negro.jpg",
       category: "Mujer",
-      featured: true
+      featured: true,
+      isNew: true
     },
     {
       name: "Bolso Dorado",
@@ -52,7 +61,8 @@ export default function Home() {
       price: 50,
       image: "/bolso-dorado.jpg",
       category: "Mujer",
-      featured: true
+      featured: true,
+      isOffer: true
     },
     {
       name: "Bolso Marrón",
@@ -66,10 +76,11 @@ export default function Home() {
       description: "Sandalias cómodas.",
       price: 45,
       image: "/sandalias-verdes.jpg",
-      category: "Calzado"
+      category: "Calzado",
+      isNew: true
     },
     {
-      name: "Sneakers Azul",
+      name: "Sneakers ",
       description: "Tenis urbanos.",
       price: 80,
       image: "/tenis-blanco-azul.jpg",
@@ -102,8 +113,6 @@ export default function Home() {
     )
   }
 
-  const categories = ["Todos", "Mujer", "Hombre", "Calzado"]
-
   const filteredProducts = useMemo(() => {
     let list = products
 
@@ -117,18 +126,18 @@ export default function Home() {
       )
     }
 
-    if (sort === "low") {
-      list = [...list].sort((a, b) => a.price - b.price)
-    }
-
-    if (sort === "high") {
-      list = [...list].sort((a, b) => b.price - a.price)
+    if (!showAll) {
+      list = list.slice(0, 6)
     }
 
     return list
-  }, [search, category, sort])
+  }, [search, category, showAll])
 
-  const featured = products.filter(p => p.featured)
+  const featured = products
+    .filter(p => p.featured)
+    .sort((a, b) => b.price - a.price)
+
+  const categories = ["Todos", "Mujer", "Hombre", "Calzado"]
 
   return (
     <main className="bg-gray-100 min-h-screen">
@@ -171,16 +180,6 @@ export default function Home() {
             <option key={c}>{c}</option>
           ))}
         </select>
-
-        <select
-          value={sort}
-          onChange={(e) => setSort(e.target.value)}
-          className="p-3 border rounded"
-        >
-          <option value="none">Orden</option>
-          <option value="low">Precio: bajo</option>
-          <option value="high">Precio: alto</option>
-        </select>
       </div>
 
       {/* MÁS VENDIDOS */}
@@ -198,6 +197,16 @@ export default function Home() {
         </div>
       </div>
 
+      {/* BOTÓN VER TODO */}
+      <div className="text-center mt-6">
+        <button
+          onClick={() => setShowAll(!showAll)}
+          className="bg-black text-white px-6 py-3 rounded-xl"
+        >
+          {showAll ? "Ocultar" : texts[lang].showAll}
+        </button>
+      </div>
+
       {/* PRODUCTOS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
 
@@ -208,9 +217,23 @@ export default function Home() {
 
             <div className="p-4">
 
-              <span className="text-xs bg-gray-100 px-2 py-1 rounded">
-                {p.category}
-              </span>
+              <div className="flex gap-2">
+                <span className="text-xs bg-gray-100 px-2 py-1 rounded">
+                  {p.category}
+                </span>
+
+                {p.isNew && (
+                  <span className="text-xs bg-blue-500 text-white px-2 py-1 rounded">
+                    {texts[lang].new}
+                  </span>
+                )}
+
+                {p.isOffer && (
+                  <span className="text-xs bg-red-500 text-white px-2 py-1 rounded">
+                    {texts[lang].offer}
+                  </span>
+                )}
+              </div>
 
               <h3 className="font-bold text-lg mt-2">{p.name}</h3>
 
