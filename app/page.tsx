@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 
 type Product = {
   name: string
@@ -8,123 +8,79 @@ type Product = {
   price: number
   image: string
   category: string
+  featured?: boolean
 }
 
 export default function Home() {
 
   const [lang, setLang] = useState("es")
+  const [search, setSearch] = useState("")
+  const [category, setCategory] = useState("Todos")
+  const [sort, setSort] = useState("none")
 
   const phone = "19715714880"
 
   const texts = {
     es: {
       subtitle: "Moda moderna para mujer y hombre",
+      search: "Buscar producto...",
+      all: "Todos",
+      featured: "🔥 Más vendidos",
       whatsapp: "Preguntar por WhatsApp"
     },
     en: {
       subtitle: "Modern fashion for men and women",
+      search: "Search product...",
+      all: "All",
+      featured: "🔥 Best sellers",
       whatsapp: "Ask on WhatsApp"
     }
   }
 
   const products: Product[] = [
-
-    // ================= MUJER =================
     {
       name: "Bolso Negro",
-      description: "Bolso elegante color negro, perfecto para cualquier ocasión.",
+      description: "Bolso elegante color negro.",
       price: 50,
       image: "/bolso-negro.jpg",
-      category: "Mujer"
+      category: "Mujer",
+      featured: true
     },
     {
       name: "Bolso Dorado",
-      description: "Bolso dorado elegante y moderno.",
+      description: "Bolso dorado elegante.",
       price: 50,
       image: "/bolso-dorado.jpg",
-      category: "Mujer"
+      category: "Mujer",
+      featured: true
     },
     {
       name: "Bolso Marrón",
-      description: "Bolso marrón clásico para uso diario.",
+      description: "Bolso clásico marrón.",
       price: 50,
       image: "/bolso-marron.jpg",
       category: "Mujer"
     },
     {
-      name: "Bolso Beige",
-      description: "Bolso beige combinable con todo outfit.",
-      price: 50,
-      image: "/bolso-beige.jpg",
-      category: "Mujer"
-    },
-    {
-      name: "Bolso Rosado",
-      description: "Bolso rosado moderno juvenil.",
-      price: 50,
-      image: "/bolso-rosado.jpg",
-      category: "Mujer"
-    },
-    {
-      name: "Bolso Blanco",
-      description: "Bolso blanco elegante.",
-      price: 50,
-      image: "/bolso-blanco.jpg",
-      category: "Mujer"
-    },
-
-    // ================= CALZADO =================
-    {
-      name: "Sandalias Bi-color",
-      description: "Sandalias cómodas para uso diario.",
-      price: 45,
-      image: "/sandalias-bi-color.jpg",
-      category: "Calzado"
-    },
-    {
       name: "Sandalias Verdes",
-      description: "Sandalias verdes frescas y cómodas.",
+      description: "Sandalias cómodas.",
       price: 45,
       image: "/sandalias-verdes.jpg",
       category: "Calzado"
     },
     {
-      name: "Sneakers Blanco/Azul",
-      description: "Tenis urbanos modernos.",
+      name: "Sneakers Azul",
+      description: "Tenis urbanos.",
       price: 80,
       image: "/tenis-blanco-azul.jpg",
-      category: "Calzado"
-    },
-
-    // ================= ACCESORIOS =================
-    {
-      name: "Cartera Negra",
-      description: "Cartera elegante negra.",
-      price: 70,
-      image: "/cartera-negra.jpg",
-      category: "Accesorios"
+      category: "Calzado",
+      featured: true
     },
     {
-      name: "Cartera Beige",
-      description: "Cartera beige elegante.",
-      price: 70,
-      image: "/cartera-beige.jpg",
-      category: "Accesorios"
-    },
-
-    // ================= HOMBRE =================
-    {
-      name: "Jeans Hombre Negro",
-      description: "Jeans negro slim moderno.",
+      name: "Jeans Negro",
+      description: "Jeans slim fit.",
       price: 60,
       image: "/jeans-negro.jpg",
-      category: "Hombre"
-    },
-    {
-      name: "Jeans Hombre Azul",
-      description: "Jeans azul clásico.",
-      price: 60,
-      image: "/jeans-azul.jpg",
       category: "Hombre"
     }
   ]
@@ -146,75 +102,125 @@ export default function Home() {
     )
   }
 
+  const categories = ["Todos", "Mujer", "Hombre", "Calzado"]
+
+  const filteredProducts = useMemo(() => {
+    let list = products
+
+    if (category !== "Todos") {
+      list = list.filter(p => p.category === category)
+    }
+
+    if (search) {
+      list = list.filter(p =>
+        p.name.toLowerCase().includes(search.toLowerCase())
+      )
+    }
+
+    if (sort === "low") {
+      list = [...list].sort((a, b) => a.price - b.price)
+    }
+
+    if (sort === "high") {
+      list = [...list].sort((a, b) => b.price - a.price)
+    }
+
+    return list
+  }, [search, category, sort])
+
+  const featured = products.filter(p => p.featured)
+
   return (
     <main className="bg-gray-100 min-h-screen">
 
       {/* HEADER */}
       <header className="bg-white flex justify-between items-center p-5 border-b sticky top-0 z-10">
-        <h1 className="text-2xl font-bold tracking-tight">YFlow</h1>
+        <h1 className="text-2xl font-bold">YFlow</h1>
 
-        <div className="flex gap-3 items-center">
-          <button
-            onClick={() => setLang(lang === "es" ? "en" : "es")}
-            className="px-3 py-1 border rounded"
-          >
-            {lang === "es" ? "EN" : "ES"}
-          </button>
-
-          <a
-            href={`https://wa.me/${phone}`}
-            className="bg-green-600 text-white px-3 py-1 rounded"
-          >
-            WhatsApp
-          </a>
-        </div>
+        <button
+          onClick={() => setLang(lang === "es" ? "en" : "es")}
+          className="px-3 py-1 border rounded"
+        >
+          {lang === "es" ? "EN" : "ES"}
+        </button>
       </header>
 
       {/* TITULO */}
-      <div className="text-center py-10">
-        <h2 className="text-4xl font-bold tracking-tight">
-          YFlow Fashion
-        </h2>
-        <p className="text-gray-600 mt-2">
-          {texts[lang].subtitle}
-        </p>
+      <div className="text-center py-8">
+        <h2 className="text-4xl font-bold">YFlow Fashion</h2>
+        <p className="text-gray-600">{texts[lang].subtitle}</p>
+      </div>
+
+      {/* BUSCADOR */}
+      <div className="flex flex-col md:flex-row gap-3 p-4 justify-center">
+
+        <input
+          type="text"
+          placeholder={texts[lang].search}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="p-3 border rounded w-full md:w-1/3"
+        />
+
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="p-3 border rounded"
+        >
+          {categories.map(c => (
+            <option key={c}>{c}</option>
+          ))}
+        </select>
+
+        <select
+          value={sort}
+          onChange={(e) => setSort(e.target.value)}
+          className="p-3 border rounded"
+        >
+          <option value="none">Orden</option>
+          <option value="low">Precio: bajo</option>
+          <option value="high">Precio: alto</option>
+        </select>
+      </div>
+
+      {/* MÁS VENDIDOS */}
+      <div className="px-6">
+        <h3 className="text-xl font-bold mb-3">🔥 {texts[lang].featured}</h3>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {featured.map((p, i) => (
+            <div key={i} className="bg-white p-4 rounded-xl shadow">
+              <img src={p.image} className="h-40 w-full object-cover rounded" />
+              <p className="font-bold mt-2">{p.name}</p>
+              <p className="text-gray-600">${p.price}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* PRODUCTOS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
 
-        {products.map((p, i) => (
-          <div
-            key={i}
-            className="bg-white rounded-2xl shadow-md hover:shadow-xl transition overflow-hidden"
-          >
+        {filteredProducts.map((p, i) => (
+          <div key={i} className="bg-white rounded-2xl shadow hover:shadow-xl transition overflow-hidden">
 
-            <img
-              src={p.image}
-              className="h-64 w-full object-cover hover:scale-105 transition duration-300"
-            />
+            <img src={p.image} className="h-64 w-full object-cover" />
 
             <div className="p-4">
 
-              <span className="text-xs bg-gray-100 px-2 py-1 rounded-full">
+              <span className="text-xs bg-gray-100 px-2 py-1 rounded">
                 {p.category}
               </span>
 
-              <h3 className="font-bold text-lg mt-2">
-                {p.name}
-              </h3>
+              <h3 className="font-bold text-lg mt-2">{p.name}</h3>
 
-              <p className="text-gray-600 text-sm mt-1">
-                {p.description}
-              </p>
+              <p className="text-gray-600 text-sm">{p.description}</p>
 
-              <p className="font-bold text-xl mt-3">
-                ${p.price}
-              </p>
+              <p className="font-bold text-xl mt-2">${p.price}</p>
 
               <button
                 onClick={() => sendWhatsApp(p)}
-                className="bg-black text-white w-full mt-4 py-3 rounded-xl hover:bg-gray-800 transition"
+                className="bg-black text-white w-full mt-3 py-3 rounded-xl"
               >
                 {texts[lang].whatsapp}
               </button>
@@ -222,7 +228,6 @@ export default function Home() {
             </div>
           </div>
         ))}
-
       </div>
 
     </main>
